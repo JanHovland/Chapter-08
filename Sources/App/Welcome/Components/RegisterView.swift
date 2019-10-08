@@ -18,15 +18,18 @@ struct RegisterView: View {
     }
     
     var body: some View {
+        
         VStack(content: {
             WelcomeMessageView()
             
             TextField("Type your name...", text: $name)
             .bordered()
+            
+            Button(action: self.registerUser) {
+              Text("OK")
+            }
                 
-            .shadow(color: Color.gray.opacity(0.4),
-                radius: 3, x: 1, y: 2)
-                
+            
         })
         .padding(.bottom, keyboardHandler.keyboardHeight)
         .background(WelcomeBackgroundImage())
@@ -42,4 +45,11 @@ struct RegisterView_Previews: PreviewProvider {
     }
 }
 
-    
+// MARK: - Event Handlers
+extension RegisterView {
+  func registerUser() {
+    print("Button triggered")
+  }
+}
+
+
