@@ -53,7 +53,11 @@ struct RegisterView: View {
 }
 
 struct RegisterView_Previews: PreviewProvider {
-    static let user = UserManager(name: "")
+    
+    // Error message if name is empty in Preview
+    // Otherwide OK on iPhone
+    
+    static let user = UserManager(name: "Ray")
     
     static var previews: some View {
         RegisterView(keyboardHandler: KeyboardFollower())
