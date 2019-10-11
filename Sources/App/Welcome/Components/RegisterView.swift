@@ -26,6 +26,21 @@ struct RegisterView: View {
             TextField("Type your name...", text: $userManager.profile.name)
             .bordered()
             
+            HStack {
+              // 1 Push the text to the right
+              Spacer()
+              // 2
+            Text("\(userManager.profile.name.count)")
+                .font(.caption)
+                // 3
+                .foregroundColor(
+                  userManager.isUserNameValid() ? .green : .red)
+                .padding(.trailing)
+            }
+            // 4 Add some spaceing from thr OK button
+            .padding(.bottom)
+                        
+            
             Button(action: self.registerUser) {
               // 1
               HStack {
@@ -42,6 +57,7 @@ struct RegisterView: View {
             }
               // 5
               .bordered()
+                .disabled(!userManager.isUserNameValid())
 
         })
         .padding(.bottom, keyboardHandler.keyboardHeight)
@@ -68,7 +84,7 @@ struct RegisterView_Previews: PreviewProvider {
 // MARK: - Event Handlers
 extension RegisterView {
   func registerUser() {
-    print("Button triggered")
+    // print("Button triggered")
     userManager.persistProfile()
   }
 }
