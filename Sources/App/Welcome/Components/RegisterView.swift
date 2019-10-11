@@ -10,7 +10,8 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @State var name: String = ""
+    // @State var name: String = ""
+    @EnvironmentObject var userManager: UserManager
     @ObservedObject var keyboardHandler: KeyboardFollower
     
     init(keyboardHandler: KeyboardFollower) {
@@ -22,14 +23,26 @@ struct RegisterView: View {
         VStack(content: {
             WelcomeMessageView()
             
-            TextField("Type your name...", text: $name)
+            TextField("Type your name...", text: $userManager.profile.name)
             .bordered()
             
             Button(action: self.registerUser) {
-              Text("OK")
+              // 1
+              HStack {
+                // 2
+                Image(systemName: "checkmark")
+                  .resizable()
+                  // 3
+                  .frame(width: 16, height: 16, alignment: .center)
+                Text("OK")
+                  // 4
+                  .font(.body)
+                  .bold()
+              }
             }
-                
-            
+              // 5
+              .bordered()
+
         })
         .padding(.bottom, keyboardHandler.keyboardHeight)
         .background(WelcomeBackgroundImage())
@@ -40,8 +53,11 @@ struct RegisterView: View {
 }
 
 struct RegisterView_Previews: PreviewProvider {
+    static let user = UserManager(name: "")
+    
     static var previews: some View {
         RegisterView(keyboardHandler: KeyboardFollower())
+        .environmentObject(user)
     }
 }
 
@@ -49,6 +65,7 @@ struct RegisterView_Previews: PreviewProvider {
 extension RegisterView {
   func registerUser() {
     print("Button triggered")
+    userManager.persistProfile()
   }
 }
 
